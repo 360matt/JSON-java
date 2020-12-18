@@ -1023,9 +1023,8 @@ public class JSONObject {
         }
     }
 
-    static final Writer writeValue(Writer writer, Object value,
-                                   int indentFactor, int indent) throws JSONException, IOException {
-        if (value == null || value.equals(null)) {
+    static final Writer writeValue(Writer writer, Object value, int indentFactor, int indent) throws JSONException, IOException {
+        if (value == null) {
             writer.write("null");
         } else if (value instanceof JSONString) {
             Object o;

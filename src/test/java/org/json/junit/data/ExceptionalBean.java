@@ -3,6 +3,8 @@
  */
 package org.json.junit.data;
 
+import org.json.JSONObject;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

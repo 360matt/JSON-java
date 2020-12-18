@@ -147,18 +147,21 @@ public class XMLTokener extends JSONTokener {
         }
         sb = new StringBuilder();
         for (; ; ) {
-            if (c == 0) {
-                return sb.toString().trim();
+
+            switch (c) {
+                case 0:
+                    return sb.toString().trim();
+                case '<':
+                    back();
+                    return sb.toString().trim();
+                case '&':
+                    sb.append(nextEntity(c));
+                    break;
+                default:
+                    sb.append(c);
             }
-            if (c == '<') {
-                back();
-                return sb.toString().trim();
-            }
-            if (c == '&') {
-                sb.append(nextEntity(c));
-            } else {
-                sb.append(c);
-            }
+
+
             c = next();
         }
     }

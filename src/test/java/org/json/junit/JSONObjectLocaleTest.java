@@ -26,11 +26,11 @@ SOFTWARE.
 
 import org.json.JSONObject;
 import org.json.junit.data.MyLocaleBean;
-import org.junit.*;
+import org.junit.Test;
 
 import java.util.Locale;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Note: This file is saved as UTF-8. Do not save as ASCII or the tests will

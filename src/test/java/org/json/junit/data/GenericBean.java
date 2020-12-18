@@ -19,6 +19,7 @@ public class GenericBean<T extends Number & Comparable<T>> implements MyBean {
      *
      */
     protected T genericValue;
+
     /**
      * @param genericValue value to initiate with
      */

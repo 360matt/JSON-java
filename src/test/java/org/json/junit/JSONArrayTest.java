@@ -336,37 +336,26 @@ public class JSONArrayTest {
     public void getArrayValues() {
         JSONArray jsonArray = new JSONArray(this.arrayStr);
         // booleans
-        assertTrue("Array true",
-                true == jsonArray.getBoolean(0));
-        assertTrue("Array false",
-                false == jsonArray.getBoolean(1));
-        assertTrue("Array string true",
-                true == jsonArray.getBoolean(2));
-        assertTrue("Array string false",
-                false == jsonArray.getBoolean(3));
+        assertTrue("Array true", jsonArray.getBoolean(0));
+        assertFalse("Array false", jsonArray.getBoolean(1));
+        assertTrue("Array string true", jsonArray.getBoolean(2));
+        assertFalse("Array string false", jsonArray.getBoolean(3));
         // strings
-        assertTrue("Array value string",
-                "hello".equals(jsonArray.getString(4)));
+        assertEquals("Array value string", "hello", jsonArray.getString(4));
         // doubles
-        assertTrue("Array double",
-                new Double(23.45e-4).equals(jsonArray.getDouble(5)));
-        assertTrue("Array string double",
-                new Double(23.45).equals(jsonArray.getDouble(6)));
+        assertEquals("Array double", 23.45e-4, jsonArray.getDouble(5), 0.0);
+        assertEquals("Array string double", 23.45, jsonArray.getDouble(6), 0.0);
         // ints
-        assertTrue("Array value int",
-                new Integer(42).equals(jsonArray.getInt(7)));
-        assertTrue("Array value string int",
-                new Integer(43).equals(jsonArray.getInt(8)));
+        assertEquals("Array value int", 42, jsonArray.getInt(7));
+        assertEquals("Array value string int", 43, jsonArray.getInt(8));
         // nested objects
         JSONArray nestedJsonArray = jsonArray.getJSONArray(9);
-        assertTrue("Array value JSONArray", nestedJsonArray != null);
+        assertNotNull("Array value JSONArray", nestedJsonArray);
         JSONObject nestedJsonObject = jsonArray.getJSONObject(10);
-        assertTrue("Array value JSONObject", nestedJsonObject != null);
+        assertNotNull("Array value JSONObject", nestedJsonObject);
         // longs
-        assertTrue("Array value long",
-                new Long(0).equals(jsonArray.getLong(11)));
-        assertTrue("Array value string long",
-                new Long(-1).equals(jsonArray.getLong(12)));
+        assertEquals("Array value long", 0L, jsonArray.getLong(11));
+        assertEquals("Array value string long", -1, jsonArray.getLong(12));
 
         assertTrue("Array value null", jsonArray.isNull(-1));
     }
@@ -381,56 +370,56 @@ public class JSONArrayTest {
         JSONArray jsonArray = new JSONArray(this.arrayStr);
         try {
             jsonArray.getBoolean(4);
-            assertTrue("expected getBoolean to fail", false);
+            fail("expected getBoolean to fail");
         } catch (JSONException e) {
             assertEquals("Expected an exception message",
                     "JSONArray[4] is not a boolean.", e.getMessage());
         }
         try {
             jsonArray.get(-1);
-            assertTrue("expected get to fail", false);
+            fail("expected get to fail");
         } catch (JSONException e) {
             assertEquals("Expected an exception message",
                     "JSONArray[-1] not found.", e.getMessage());
         }
         try {
             jsonArray.getDouble(4);
-            assertTrue("expected getDouble to fail", false);
+            fail("expected getDouble to fail");
         } catch (JSONException e) {
             assertEquals("Expected an exception message",
                     "JSONArray[4] is not a double.", e.getMessage());
         }
         try {
             jsonArray.getInt(4);
-            assertTrue("expected getInt to fail", false);
+            fail("expected getInt to fail");
         } catch (JSONException e) {
             assertEquals("Expected an exception message",
                     "JSONArray[4] is not a int.", e.getMessage());
         }
         try {
             jsonArray.getJSONArray(4);
-            assertTrue("expected getJSONArray to fail", false);
+            fail("expected getJSONArray to fail");
         } catch (JSONException e) {
             assertEquals("Expected an exception message",
                     "JSONArray[4] is not a JSONArray.", e.getMessage());
         }
         try {
             jsonArray.getJSONObject(4);
-            assertTrue("expected getJSONObject to fail", false);
+            fail("expected getJSONObject to fail");
         } catch (JSONException e) {
             assertEquals("Expected an exception message",
                     "JSONArray[4] is not a JSONObject.", e.getMessage());
         }
         try {
             jsonArray.getLong(4);
-            assertTrue("expected getLong to fail", false);
+            fail("expected getLong to fail");
         } catch (JSONException e) {
             assertEquals("Expected an exception message",
                     "JSONArray[4] is not a long.", e.getMessage());
         }
         try {
             jsonArray.getString(5);
-            assertTrue("expected getString to fail", false);
+            fail("expected getString to fail");
         } catch (JSONException e) {
             assertEquals("Expected an exception message",
                     "JSONArray[5] is not a String.", e.getMessage());

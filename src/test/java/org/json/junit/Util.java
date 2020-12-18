@@ -29,7 +29,8 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * These are helpful utility methods that perform basic comparisons
