@@ -24,18 +24,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import static org.junit.Assert.*;
-
-import java.util.*;
-
-import org.json.*;
+import org.json.JSONObject;
 import org.json.junit.data.MyLocaleBean;
 import org.junit.*;
+
+import java.util.Locale;
+
+import static org.junit.Assert.*;
 
 /**
  * Note: This file is saved as UTF-8. Do not save as ASCII or the tests will
  * fail.
- *
  */
 public class JSONObjectLocaleTest {
     /**
@@ -62,7 +61,7 @@ public class JSONObjectLocaleTest {
          */
         Locale.setDefault(new Locale("en"));
         JSONObject jsonen = new JSONObject(myLocaleBean);
-        assertEquals("expected size 2, found: " +jsonen.length(), 2, jsonen.length());
+        assertEquals("expected size 2, found: " + jsonen.length(), 2, jsonen.length());
         assertEquals("expected jsonen[i] == beanI", "beanI", jsonen.getString("i"));
         assertEquals("expected jsonen[id] == beanId", "beanId", jsonen.getString("id"));
 
@@ -73,7 +72,7 @@ public class JSONObjectLocaleTest {
          */
         Locale.setDefault(new Locale("tr"));
         JSONObject jsontr = new JSONObject(myLocaleBean);
-        assertEquals("expected size 2, found: " +jsontr.length(), 2, jsontr.length());
+        assertEquals("expected size 2, found: " + jsontr.length(), 2, jsontr.length());
         assertEquals("expected jsontr[i] == beanI", "beanI", jsontr.getString("i"));
         assertEquals("expected jsontr[id] == beanId", "beanId", jsontr.getString("id"));
     }

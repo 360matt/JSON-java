@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.json.junit.data;
 
@@ -11,6 +11,14 @@ public class GenericBeanInt extends GenericBean<Integer> {
     /** */
     final char a = 'A';
 
+    /**
+     * @param genericValue
+     *            the value to initiate with.
+     */
+    public GenericBeanInt(Integer genericValue) {
+        super(genericValue);
+    }
+
     /** @return the a */
     public char getA() {
         return this.a;
@@ -18,7 +26,7 @@ public class GenericBeanInt extends GenericBean<Integer> {
 
     /**
      * Should not be beanable
-     * 
+     *
      * @return false
      */
     public boolean getable() {
@@ -27,7 +35,7 @@ public class GenericBeanInt extends GenericBean<Integer> {
 
     /**
      * Should not be beanable
-     * 
+     *
      * @return false
      */
     public boolean get() {
@@ -36,7 +44,7 @@ public class GenericBeanInt extends GenericBean<Integer> {
 
     /**
      * Should not be beanable
-     * 
+     *
      * @return false
      */
     public boolean is() {
@@ -45,19 +53,11 @@ public class GenericBeanInt extends GenericBean<Integer> {
 
     /**
      * Should be beanable
-     * 
+     *
      * @return false
      */
     public boolean isB() {
-        return this.genericValue.equals((Integer.valueOf(this.a+1)));
-    }
-
-    /**
-     * @param genericValue
-     *            the value to initiate with.
-     */
-    public GenericBeanInt(Integer genericValue) {
-        super(genericValue);
+        return this.genericValue.equals((Integer.valueOf(this.a + 1)));
     }
 
     /** override to generate a bridge method */

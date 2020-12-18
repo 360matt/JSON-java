@@ -24,11 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
-
-import java.util.*;
-
-import org.json.*;
 
 /**
  * These are helpful utility methods that perform basic comparisons
@@ -40,11 +41,12 @@ public class Util {
     /**
      * Compares two JSONArrays for equality.
      * The arrays need not be in the same order.
-     * @param jsonArray created by the code to be tested
+     *
+     * @param jsonArray         created by the code to be tested
      * @param expectedJsonArray created specifically for comparing
      */
     public static void compareActualVsExpectedJsonArrays(JSONArray jsonArray,
-            JSONArray expectedJsonArray) {
+                                                         JSONArray expectedJsonArray) {
         assertTrue("jsonArray lengths should be equal",
                 jsonArray.length() == expectedJsonArray.length());
         for (int i = 0; i < jsonArray.length(); ++i) {
@@ -56,8 +58,9 @@ public class Util {
 
     /**
      * Compares two JSONObjects for equality. The objects need not be
-     * in the same order 
-     * @param jsonObject created by the code to be tested
+     * in the same order
+     *
+     * @param jsonObject         created by the code to be tested
      * @param expectedJsonObject created specifically for comparing
      */
     public static void compareActualVsExpectedJsonObjects(
@@ -76,22 +79,23 @@ public class Util {
     /**
      * Compare two objects for equality. Might be JSONArray, JSONObject,
      * or something else.
-     * @param value created by the code to be tested
+     *
+     * @param value         created by the code to be tested
      * @param expectedValue created specifically for comparing
-     * @param key key to the jsonObject entry to be compared
+     * @param key           key to the jsonObject entry to be compared
      */
     private static void compareActualVsExpectedObjects(Object value,
-            Object expectedValue) {
+                                                       Object expectedValue) {
         if (value instanceof JSONObject && expectedValue instanceof JSONObject) {
             // Compare JSONObjects
-            JSONObject jsonObject = (JSONObject)value;
-            JSONObject expectedJsonObject = (JSONObject)expectedValue;
+            JSONObject jsonObject = (JSONObject) value;
+            JSONObject expectedJsonObject = (JSONObject) expectedValue;
             compareActualVsExpectedJsonObjects(
                     jsonObject, expectedJsonObject);
         } else if (value instanceof JSONArray && expectedValue instanceof JSONArray) {
             // Compare JSONArrays
-            JSONArray jsonArray = (JSONArray)value;
-            JSONArray expectedJsonArray = (JSONArray)expectedValue;
+            JSONArray jsonArray = (JSONArray) value;
+            JSONArray expectedJsonArray = (JSONArray) expectedValue;
             compareActualVsExpectedJsonArrays(
                     jsonArray, expectedJsonArray);
         } else {
@@ -104,16 +108,16 @@ public class Util {
             if (!(value instanceof Number && expectedValue instanceof Number)) {
                 // Non-Number and non-matching types
                 assertEquals("object types should be equal ",
-                    expectedValue.getClass().toString(),
-                    value.getClass().toString()
+                        expectedValue.getClass().toString(),
+                        value.getClass().toString()
                 );
             }
             /**
              * Same types or both Numbers, compare by toString()
              */
             assertEquals("values should be equal",
-                expectedValue.toString(),
-                value.toString()
+                    expectedValue.toString(),
+                    value.toString()
             );
         }
     }

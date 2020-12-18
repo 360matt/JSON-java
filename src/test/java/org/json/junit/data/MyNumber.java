@@ -5,21 +5,21 @@ import java.math.BigDecimal;
 /**
  * Number override for testing. Number overrides should always override
  * toString, hashCode, and Equals.
- * 
- * @see <a
- *      href="https://docs.oracle.com/javase/tutorial/java/data/numberclasses.html">The
- *      Numbers Classes</a>
- * @see <a
- *      href="https://docs.oracle.com/javase/tutorial/java/data/numberformat.html">Formatting
- *      Numeric Print Output</a>
- * 
+ *
  * @author John Aylward
+ * @see <a
+ * href="https://docs.oracle.com/javase/tutorial/java/data/numberclasses.html">The
+ * Numbers Classes</a>
+ * @see <a
+ * href="https://docs.oracle.com/javase/tutorial/java/data/numberformat.html">Formatting
+ * Numeric Print Output</a>
  */
 public class MyNumber extends Number {
-    private Number number = BigDecimal.valueOf(42);
     /**
+     *
      */
     private static final long serialVersionUID = 1L;
+    private Number number = BigDecimal.valueOf(42);
 
     /**
      * @return number!
@@ -50,7 +50,7 @@ public class MyNumber extends Number {
 
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
-     * 
+     *
      * Number overrides should in general always override the  toString method.
      */
     @Override

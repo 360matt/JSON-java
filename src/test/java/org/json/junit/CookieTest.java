@@ -24,10 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import static org.junit.Assert.*;
-
-import org.json.*;
+import org.json.Cookie;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 
 /**
@@ -35,7 +37,7 @@ import org.junit.Test;
  * <p>
  * At its most basic, a cookie is a name=value pair. The value may be subdivided
  * into other cookies, but that is not tested here. The cookie may also include
- * certain named attributes, delimited by semicolons. 
+ * certain named attributes, delimited by semicolons.
  * <p>
  * The Cookie.toString() method emits certain attributes if present: expires,
  * domain, path, secure. All but secure are name-value pairs. Other attributes
@@ -49,7 +51,7 @@ public class CookieTest {
      * Attempts to create a JSONObject from a null string.
      * Expects a NullPointerException.
      */
-    @Test(expected=NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void nullCookieException() {
         String cookieStr = null;
         Cookie.toJSONObject(cookieStr);
@@ -81,10 +83,10 @@ public class CookieTest {
     @Test
     public void booleanAttribute() {
         String cookieStr = "this=Cookie;myAttribute";
-            JSONObject jo = Cookie.toJSONObject(cookieStr);
-            assertTrue("has key 'name'", jo.has("name"));
-            assertTrue("has key 'value'", jo.has("value"));
-            assertTrue("has key 'myAttribute'", jo.has("myattribute"));
+        JSONObject jo = Cookie.toJSONObject(cookieStr);
+        assertTrue("has key 'name'", jo.has("name"));
+        assertTrue("has key 'value'", jo.has("value"));
+        assertTrue("has key 'myAttribute'", jo.has("myattribute"));
     }
 
     /**
@@ -104,8 +106,8 @@ public class CookieTest {
                     e.getMessage());
         }
     }
+
     /**
-     * 
      * Attempts to create a JSONObject from an cookie string where the name is blank.<br>
      * Note: Cookie throws an exception, but CookieList does not.<br>
      * Expects a JSONException
@@ -132,34 +134,34 @@ public class CookieTest {
         String expectedCookieStr = "{\"name\":\"SID\",\"value\":\"31d4d96e407aad42\"}";
         JSONObject jsonObject = Cookie.toJSONObject(cookieStr);
         JSONObject expectedJsonObject = new JSONObject(expectedCookieStr);
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedJsonObject);
     }
 
     /**
-     * Store a cookie with all of the supported attributes in a 
+     * Store a cookie with all of the supported attributes in a
      * JSONObject. The secure attribute, which has no value, is treated
      * as a boolean.
      */
     @Test
     public void multiPartCookie() {
-        String cookieStr = 
-            "PH=deleted;  "+
-            " expires=Wed, 19-Mar-2014 17:53:53 GMT;"+
-            "path=/;   "+
-            "    domain=.yahoo.com;"+
-            "secure";
-        String expectedCookieStr = 
-            "{"+
-                "\"name\":\"PH\","+
-                "\"value\":\"deleted\","+
-                "\"path\":\"/\","+
-                "\"expires\":\"Wed, 19-Mar-2014 17:53:53 GMT\","+
-                "\"domain\":\".yahoo.com\","+
-                "\"secure\":true"+
-            "}";
+        String cookieStr =
+                "PH=deleted;  " +
+                        " expires=Wed, 19-Mar-2014 17:53:53 GMT;" +
+                        "path=/;   " +
+                        "    domain=.yahoo.com;" +
+                        "secure";
+        String expectedCookieStr =
+                "{" +
+                        "\"name\":\"PH\"," +
+                        "\"value\":\"deleted\"," +
+                        "\"path\":\"/\"," +
+                        "\"expires\":\"Wed, 19-Mar-2014 17:53:53 GMT\"," +
+                        "\"domain\":\".yahoo.com\"," +
+                        "\"secure\":true" +
+                        "}";
         JSONObject jsonObject = Cookie.toJSONObject(cookieStr);
         JSONObject expectedJsonObject = new JSONObject(expectedCookieStr);
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedJsonObject);
     }
 
     /**
@@ -169,94 +171,94 @@ public class CookieTest {
      */
     @Test
     public void convertCookieToString() {
-        String cookieStr = 
-            "PH=deleted;  "+
-            " expires=Wed, 19-Mar-2014 17:53:53 GMT;"+
-            "path=/;   "+
-            "    domain=.yahoo.com;"+
-            "thisWont=beIncluded;"+
-            "secure";
-        String expectedCookieStr = 
-            "{\"thiswont\":\"beIncluded\","+
-            "\"path\":\"/\","+
-            "\"expires\":\"Wed, 19-Mar-2014 17:53:53 GMT\","+
-            "\"domain\":\".yahoo.com\","+
-            "\"name\":\"PH\","+
-            "\"secure\":true,"+
-            "\"value\":\"deleted\"}";
+        String cookieStr =
+                "PH=deleted;  " +
+                        " expires=Wed, 19-Mar-2014 17:53:53 GMT;" +
+                        "path=/;   " +
+                        "    domain=.yahoo.com;" +
+                        "thisWont=beIncluded;" +
+                        "secure";
+        String expectedCookieStr =
+                "{\"thiswont\":\"beIncluded\"," +
+                        "\"path\":\"/\"," +
+                        "\"expires\":\"Wed, 19-Mar-2014 17:53:53 GMT\"," +
+                        "\"domain\":\".yahoo.com\"," +
+                        "\"name\":\"PH\"," +
+                        "\"secure\":true," +
+                        "\"value\":\"deleted\"}";
         // Add the nonstandard attribute to the expected cookie string
         String expectedDirectCompareCookieStr = expectedCookieStr;
         // convert all strings into JSONObjects
         JSONObject jsonObject = Cookie.toJSONObject(cookieStr);
         JSONObject expectedJsonObject = new JSONObject(expectedCookieStr);
-        JSONObject expectedDirectCompareJsonObject = 
+        JSONObject expectedDirectCompareJsonObject =
                 new JSONObject(expectedDirectCompareCookieStr);
         // emit the string
         String cookieToStr = Cookie.toString(jsonObject);
         // create a final JSONObject from the string
         JSONObject finalJsonObject = Cookie.toJSONObject(cookieToStr);
         // JSONObject should contain the nonstandard string
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedDirectCompareJsonObject);
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedDirectCompareJsonObject);
         // JSONObject -> string -> JSONObject should not contain the nonstandard string
-        Util.compareActualVsExpectedJsonObjects(finalJsonObject,expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(finalJsonObject, expectedJsonObject);
     }
 
     /**
      * A string may be URL-encoded when converting to JSONObject.
      * If found, '+' is converted to ' ', and %hh hex strings are converted
      * to their ascii char equivalents. This test confirms the decoding
-     * behavior. 
+     * behavior.
      */
     @Test
     public void convertEncodedCookieToString() {
-        String cookieStr = 
-            "PH=deleted;  "+
-            " expires=Wed,+19-Mar-2014+17:53:53+GMT;"+
-            "path=/%2Bthis/is%26/a/spec%3Bsegment%3D;   "+
-            "    domain=.yahoo.com;"+
-            "secure";
-        String expectedCookieStr = 
-            "{\"path\":\"/+this/is&/a/spec;segment=\","+
-            "\"expires\":\"Wed, 19-Mar-2014 17:53:53 GMT\","+
-            "\"domain\":\".yahoo.com\","+
-            "\"name\":\"PH\","+
-            "\"secure\":true,"+
-            "\"value\":\"deleted\"}";
+        String cookieStr =
+                "PH=deleted;  " +
+                        " expires=Wed,+19-Mar-2014+17:53:53+GMT;" +
+                        "path=/%2Bthis/is%26/a/spec%3Bsegment%3D;   " +
+                        "    domain=.yahoo.com;" +
+                        "secure";
+        String expectedCookieStr =
+                "{\"path\":\"/+this/is&/a/spec;segment=\"," +
+                        "\"expires\":\"Wed, 19-Mar-2014 17:53:53 GMT\"," +
+                        "\"domain\":\".yahoo.com\"," +
+                        "\"name\":\"PH\"," +
+                        "\"secure\":true," +
+                        "\"value\":\"deleted\"}";
         JSONObject jsonObject = Cookie.toJSONObject(cookieStr);
         JSONObject expectedJsonObject = new JSONObject(expectedCookieStr);
         String cookieToStr = Cookie.toString(jsonObject);
         JSONObject finalJsonObject = Cookie.toJSONObject(cookieToStr);
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedJsonObject);
-        Util.compareActualVsExpectedJsonObjects(finalJsonObject,expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(finalJsonObject, expectedJsonObject);
     }
-    
+
     /**
      * A public API method performs a URL encoding for selected chars
-     * in a string. Control chars, '+', '%', '=', ';' are all encoded 
+     * in a string. Control chars, '+', '%', '=', ';' are all encoded
      * as %hh hex strings. The string is also trimmed.
-     * This test confirms that behavior. 
+     * This test confirms that behavior.
      */
     @Test
     public void escapeString() {
         String str = "   +%\r\n\t\b%=;;;   ";
         String expectedStr = "%2b%25%0d%0a%09%08%25%3d%3b%3b%3b";
         String actualStr = Cookie.escape(str);
-        assertTrue("expect escape() to encode correctly. Actual: " +actualStr+
-                " expected: " +expectedStr, expectedStr.equals(actualStr));
+        assertTrue("expect escape() to encode correctly. Actual: " + actualStr +
+                " expected: " + expectedStr, expectedStr.equals(actualStr));
     }
 
     /**
      * A public API method performs URL decoding for strings.
      * '+' is converted to space and %hh hex strings are converted to
      * their ascii equivalent values. The string is not trimmed.
-     * This test confirms that behavior. 
+     * This test confirms that behavior.
      */
     @Test
     public void unescapeString() {
         String str = " +%2b%25%0d%0a%09%08%25%3d%3b%3b%3b+ ";
         String expectedStr = "  +%\r\n\t\b%=;;;  ";
         String actualStr = Cookie.unescape(str);
-        assertTrue("expect unescape() to decode correctly. Actual: " +actualStr+
-                " expected: " +expectedStr, expectedStr.equals(actualStr));
+        assertTrue("expect unescape() to decode correctly. Actual: " + actualStr +
+                " expected: " + expectedStr, expectedStr.equals(actualStr));
     }
 }

@@ -7,8 +7,8 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 //plugins {
-    // id 'java'
-    //id 'maven-publish'
+// id 'java'
+//id 'maven-publish'
 // }
 
 repositories {

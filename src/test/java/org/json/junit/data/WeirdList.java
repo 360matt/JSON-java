@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.json.junit.data;
 
@@ -37,7 +37,7 @@ public class WeirdList {
 
     /**
      * get a value at an index.
-     * 
+     *
      * @param i
      *            index to get
      * @return the value at the index
@@ -48,7 +48,7 @@ public class WeirdList {
 
     /**
      * get a value at an index.
-     * 
+     *
      * @param i
      *            index to get
      * @return the value at the index

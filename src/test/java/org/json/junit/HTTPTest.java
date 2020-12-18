@@ -24,10 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import static org.junit.Assert.*;
-
-import org.json.*;
+import org.json.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 
 /**
@@ -39,7 +41,7 @@ public class HTTPTest {
      * Attempt to call HTTP.toJSONObject() with a null string
      * Expects a NUllPointerException.
      */
-    @Test(expected=NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void nullHTTPException() {
         String httpStr = null;
         HTTP.toJSONObject(httpStr);
@@ -63,7 +65,7 @@ public class HTTPTest {
     }
 
     /**
-     * Calling HTTP.toJSONObject() with an empty string will result in a 
+     * Calling HTTP.toJSONObject() with an empty string will result in a
      * populated JSONObject with keys but no values for Request-URI, Method,
      * and HTTP-Version.
      */
@@ -73,7 +75,7 @@ public class HTTPTest {
         String expectedHTTPStr = "{\"Request-URI\":\"\",\"Method\":\"\",\"HTTP-Version\":\"\"}";
         JSONObject jsonObject = HTTP.toJSONObject(httpStr);
         JSONObject expectedJsonObject = new JSONObject(expectedHTTPStr);
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedJsonObject);
     }
 
     /**
@@ -83,11 +85,11 @@ public class HTTPTest {
     @Test
     public void simpleHTTPRequest() {
         String httpStr = "GET /hello.txt HTTP/1.1";
-        String expectedHTTPStr = 
-            "{\"Request-URI\":\"/hello.txt\",\"Method\":\"GET\",\"HTTP-Version\":\"HTTP/1.1\"}";
+        String expectedHTTPStr =
+                "{\"Request-URI\":\"/hello.txt\",\"Method\":\"GET\",\"HTTP-Version\":\"HTTP/1.1\"}";
         JSONObject jsonObject = HTTP.toJSONObject(httpStr);
         JSONObject expectedJsonObject = new JSONObject(expectedHTTPStr);
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedJsonObject);
     }
 
     /**
@@ -97,62 +99,62 @@ public class HTTPTest {
     @Test
     public void simpleHTTPResponse() {
         String httpStr = "HTTP/1.1 200 OK";
-        String expectedHTTPStr = 
-            "{\"HTTP-Version\":\"HTTP/1.1\",\"Status-Code\":\"200\",\"Reason-Phrase\":\"OK\"}";
+        String expectedHTTPStr =
+                "{\"HTTP-Version\":\"HTTP/1.1\",\"Status-Code\":\"200\",\"Reason-Phrase\":\"OK\"}";
         JSONObject jsonObject = HTTP.toJSONObject(httpStr);
         JSONObject expectedJsonObject = new JSONObject(expectedHTTPStr);
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedJsonObject);
     }
 
     /**
      * Call HTTP.toJSONObject() with a full request string including
-     * request headers. 
+     * request headers.
      */
     @Test
     public void extendedHTTPRequest() {
-        String httpStr = 
-            "POST /enlighten/calais.asmx HTTP/1.1\n"+
-            "Host: api.opencalais.com\n"+
-            "Content-Type: text/xml; charset=utf-8\n"+
-            "Content-Length: 100\n"+
-            "SOAPAction: \"http://clearforest.com/Enlighten\"";
-        String expectedHTTPStr = 
-            "{"+
-            "\"Request-URI\":\"/enlighten/calais.asmx\","+
-            "\"Host\":\"api.opencalais.com\","+
-            "\"Method\":\"POST\","+
-            "\"HTTP-Version\":\"HTTP/1.1\","+
-            "\"Content-Length\":\"100\","+
-            "\"Content-Type\":\"text/xml; charset=utf-8\"}";
+        String httpStr =
+                "POST /enlighten/calais.asmx HTTP/1.1\n" +
+                        "Host: api.opencalais.com\n" +
+                        "Content-Type: text/xml; charset=utf-8\n" +
+                        "Content-Length: 100\n" +
+                        "SOAPAction: \"http://clearforest.com/Enlighten\"";
+        String expectedHTTPStr =
+                "{" +
+                        "\"Request-URI\":\"/enlighten/calais.asmx\"," +
+                        "\"Host\":\"api.opencalais.com\"," +
+                        "\"Method\":\"POST\"," +
+                        "\"HTTP-Version\":\"HTTP/1.1\"," +
+                        "\"Content-Length\":\"100\"," +
+                        "\"Content-Type\":\"text/xml; charset=utf-8\"}";
         JSONObject jsonObject = HTTP.toJSONObject(httpStr);
         JSONObject expectedJsonObject = new JSONObject(expectedHTTPStr);
         /**
          * Not too easy for JSONObject to parse a string with embedded quotes.
          * For the sake of the test, add it here.
          */
-        expectedJsonObject.put("SOAPAction","\"http://clearforest.com/Enlighten\"");
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedJsonObject);
+        expectedJsonObject.put("SOAPAction", "\"http://clearforest.com/Enlighten\"");
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedJsonObject);
     }
 
     /**
      * Call HTTP.toJSONObject() with a full response string including
-     * response headers. 
+     * response headers.
      */
     @Test
     public void extendedHTTPResponse() {
-        String httpStr = 
-            "HTTP/1.1 200 OK\n"+
-            "Content-Type: text/xml; charset=utf-8\n"+
-            "Content-Length: 100\n";
-        String expectedHTTPStr = 
-            "{\"HTTP-Version\":\"HTTP/1.1\","+
-            "\"Status-Code\":\"200\","+
-            "\"Content-Length\":\"100\","+
-            "\"Reason-Phrase\":\"OK\","+
-            "\"Content-Type\":\"text/xml; charset=utf-8\"}";
+        String httpStr =
+                "HTTP/1.1 200 OK\n" +
+                        "Content-Type: text/xml; charset=utf-8\n" +
+                        "Content-Length: 100\n";
+        String expectedHTTPStr =
+                "{\"HTTP-Version\":\"HTTP/1.1\"," +
+                        "\"Status-Code\":\"200\"," +
+                        "\"Content-Length\":\"100\"," +
+                        "\"Reason-Phrase\":\"OK\"," +
+                        "\"Content-Type\":\"text/xml; charset=utf-8\"}";
         JSONObject jsonObject = HTTP.toJSONObject(httpStr);
         JSONObject expectedJsonObject = new JSONObject(expectedHTTPStr);
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedJsonObject);
     }
 
     /**
@@ -161,19 +163,19 @@ public class HTTPTest {
      */
     @Test
     public void convertHTTPRequestToString() {
-        String httpStr = 
-            "POST /enlighten/calais.asmx HTTP/1.1\n"+
-            "Host: api.opencalais.com\n"+
-            "Content-Type: text/xml; charset=utf-8\n"+
-            "Content-Length: 100";
-        String expectedHTTPStr = 
-            "{"+
-            "\"Request-URI\":\"/enlighten/calais.asmx\","+
-            "\"Host\":\"api.opencalais.com\","+
-            "\"Method\":\"POST\","+
-            "\"HTTP-Version\":\"HTTP/1.1\","+
-            "\"Content-Length\":\"100\","+
-            "\"Content-Type\":\"text/xml; charset=utf-8\"}";
+        String httpStr =
+                "POST /enlighten/calais.asmx HTTP/1.1\n" +
+                        "Host: api.opencalais.com\n" +
+                        "Content-Type: text/xml; charset=utf-8\n" +
+                        "Content-Length: 100";
+        String expectedHTTPStr =
+                "{" +
+                        "\"Request-URI\":\"/enlighten/calais.asmx\"," +
+                        "\"Host\":\"api.opencalais.com\"," +
+                        "\"Method\":\"POST\"," +
+                        "\"HTTP-Version\":\"HTTP/1.1\"," +
+                        "\"Content-Length\":\"100\"," +
+                        "\"Content-Type\":\"text/xml; charset=utf-8\"}";
         JSONObject jsonObject = HTTP.toJSONObject(httpStr);
         JSONObject expectedJsonObject = new JSONObject(expectedHTTPStr);
         String httpToStr = HTTP.toString(jsonObject);
@@ -181,11 +183,11 @@ public class HTTPTest {
          * JSONObject objects to crlfs and any trailing chars.
          * For the sake of the test, simplify the resulting string
          */
-        httpToStr = httpToStr.replaceAll("("+HTTP.CRLF+HTTP.CRLF+")", "");
+        httpToStr = httpToStr.replaceAll("(" + HTTP.CRLF + HTTP.CRLF + ")", "");
         httpToStr = httpToStr.replaceAll(HTTP.CRLF, "\n");
         JSONObject finalJsonObject = HTTP.toJSONObject(httpToStr);
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedJsonObject);
-        Util.compareActualVsExpectedJsonObjects(finalJsonObject,expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(finalJsonObject, expectedJsonObject);
     }
 
     /**
@@ -194,16 +196,16 @@ public class HTTPTest {
      */
     @Test
     public void convertHTTPResponseToString() {
-        String httpStr = 
-                "HTTP/1.1 200 OK\n"+
-                "Content-Type: text/xml; charset=utf-8\n"+
-                "Content-Length: 100\n";
-            String expectedHTTPStr = 
-                "{\"HTTP-Version\":\"HTTP/1.1\","+
-                "\"Status-Code\":\"200\","+
-                "\"Content-Length\":\"100\","+
-                "\"Reason-Phrase\":\"OK\","+
-                "\"Content-Type\":\"text/xml; charset=utf-8\"}";
+        String httpStr =
+                "HTTP/1.1 200 OK\n" +
+                        "Content-Type: text/xml; charset=utf-8\n" +
+                        "Content-Length: 100\n";
+        String expectedHTTPStr =
+                "{\"HTTP-Version\":\"HTTP/1.1\"," +
+                        "\"Status-Code\":\"200\"," +
+                        "\"Content-Length\":\"100\"," +
+                        "\"Reason-Phrase\":\"OK\"," +
+                        "\"Content-Type\":\"text/xml; charset=utf-8\"}";
         JSONObject jsonObject = HTTP.toJSONObject(httpStr);
         JSONObject expectedJsonObject = new JSONObject(expectedHTTPStr);
         String httpToStr = HTTP.toString(jsonObject);
@@ -211,10 +213,10 @@ public class HTTPTest {
          * JSONObject objects to crlfs and any trailing chars.
          * For the sake of the test, simplify the resulting string
          */
-        httpToStr = httpToStr.replaceAll("("+HTTP.CRLF+HTTP.CRLF+")", "");
+        httpToStr = httpToStr.replaceAll("(" + HTTP.CRLF + HTTP.CRLF + ")", "");
         httpToStr = httpToStr.replaceAll(HTTP.CRLF, "\n");
         JSONObject finalJsonObject = HTTP.toJSONObject(httpToStr);
-        Util.compareActualVsExpectedJsonObjects(jsonObject,expectedJsonObject);
-        Util.compareActualVsExpectedJsonObjects(finalJsonObject,expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(jsonObject, expectedJsonObject);
+        Util.compareActualVsExpectedJsonObjects(finalJsonObject, expectedJsonObject);
     }
 }

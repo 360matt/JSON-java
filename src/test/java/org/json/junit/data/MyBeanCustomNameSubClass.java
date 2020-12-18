@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.json.junit.data;
 
@@ -13,20 +13,40 @@ import org.json.JSONPropertyName;
 public class MyBeanCustomNameSubClass extends MyBeanCustomName {
     @Override
     @JSONPropertyName("forcedInt")
-    public int getIgnoredInt() { return 42*42; }
+    public int getIgnoredInt() {
+        return 42 * 42;
+    }
+
     @Override
     @JSONPropertyName("newIntFieldName")
-    public int getSomeInt() { return 43; }
+    public int getSomeInt() {
+        return 43;
+    }
+
     @Override
-    public String getSomeString() { return "subClassString"; }
+    public String getSomeString() {
+        return "subClassString";
+    }
+
     @Override
     @JSONPropertyName("AMoreNormalName")
-    public double getMyDouble() { return 1.0d; }
+    public double getMyDouble() {
+        return 1.0d;
+    }
+
     @Override
-    public float getSomeFloat() { return 3.0f; }
+    public float getSomeFloat() {
+        return 3.0f;
+    }
+
     @JSONPropertyIgnore
     @JSONPropertyName("ShouldBeIgnored")
-    public boolean getShouldNotBeJSON() { return true; }
+    public boolean getShouldNotBeJSON() {
+        return true;
+    }
+
     @JSONPropertyName("Getable")
-    public boolean getable() { return true; }
+    public boolean getable() {
+        return true;
+    }
 }

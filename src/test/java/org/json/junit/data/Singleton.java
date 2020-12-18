@@ -2,28 +2,37 @@ package org.json.junit.data;
 
 /**
  * Sample singleton for use with bean testing.
- * 
- * @author John Aylward
  *
+ * @author John Aylward
  */
 public final class Singleton {
-    /** */
-    private int someInt;
-    /** */
-    private String someString;
-    /** single instance. */
+    /**
+     * single instance.
+     */
     private static final Singleton INSTANCE = new Singleton();
+    /**
+     *
+     */
+    private int someInt;
+    /**
+     *
+     */
+    private String someString;
 
-    /** @return the singleton instance. */
-    public static final Singleton getInstance() {
-        return INSTANCE;
-    }
-
-    /** */
+    /**
+     *
+     */
     private Singleton() {
         if (INSTANCE != null) {
             throw new IllegalStateException("Already instantiated");
         }
+    }
+
+    /**
+     * @return the singleton instance.
+     */
+    public static final Singleton getInstance() {
+        return INSTANCE;
     }
 
     @Override
@@ -31,31 +40,33 @@ public final class Singleton {
         return INSTANCE;
     }
 
-    /** @return someInt */
+    /**
+     * @return someInt
+     */
     public int getSomeInt() {
         return this.someInt;
     }
 
     /**
      * sets someInt.
-     * 
-     * @param someInt
-     *            the someInt to set
+     *
+     * @param someInt the someInt to set
      */
     public void setSomeInt(int someInt) {
         this.someInt = someInt;
     }
 
-    /** @return someString */
+    /**
+     * @return someString
+     */
     public String getSomeString() {
         return this.someString;
     }
 
     /**
      * sets someString.
-     * 
-     * @param someString
-     *            the someString to set
+     *
+     * @param someString the someString to set
      */
     public void setSomeString(String someString) {
         this.someString = someString;

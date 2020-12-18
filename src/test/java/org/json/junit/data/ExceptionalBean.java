@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.json.junit.data;
 
@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 
 /**
  * Object for testing the exception handling in {@link JSONObject#populateMap}.
- * 
+ *
  * @author John Aylward
  */
 public class ExceptionalBean {

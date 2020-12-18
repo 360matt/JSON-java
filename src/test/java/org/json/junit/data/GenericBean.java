@@ -3,38 +3,40 @@ package org.json.junit.data;
 import java.io.StringReader;
 
 /**
- * 
+ * @param <T> generic number value
  * @author John Aylward
- *
- * @param <T>
- *            generic number value
  */
 public class GenericBean<T extends Number & Comparable<T>> implements MyBean {
     /**
-     * @param genericValue
-     *            value to initiate with
+     * to be used by the calling test to see how often the getter is called
+     */
+    public int genericGetCounter;
+    /**
+     * to be used by the calling test to see how often the setter is called
+     */
+    public int genericSetCounter;
+    /**
+     *
+     */
+    protected T genericValue;
+    /**
+     * @param genericValue value to initiate with
      */
     public GenericBean(T genericValue) {
         super();
         this.genericValue = genericValue;
     }
 
-    /** */
-    protected T genericValue;
-    /** to be used by the calling test to see how often the getter is called */
-    public int genericGetCounter;
-    /** to be used by the calling test to see how often the setter is called */
-    public int genericSetCounter;
-
-    /** @return the genericValue */
+    /**
+     * @return the genericValue
+     */
     public T getGenericValue() {
         this.genericGetCounter++;
         return this.genericValue;
     }
 
     /**
-     * @param genericValue
-     *            generic value to set
+     * @param genericValue generic value to set
      */
     public void setGenericValue(T genericValue) {
         this.genericSetCounter++;

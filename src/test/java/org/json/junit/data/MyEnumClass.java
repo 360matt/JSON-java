@@ -10,12 +10,15 @@ public class MyEnumClass {
     public MyEnum getMyEnum() {
         return this.myEnum;
     }
+
     public void setMyEnum(MyEnum myEnum) {
         this.myEnum = myEnum;
     }
+
     public MyEnumField getMyEnumField() {
         return this.myEnumField;
     }
+
     public void setMyEnumField(MyEnumField myEnumField) {
         this.myEnumField = myEnumField;
     }
